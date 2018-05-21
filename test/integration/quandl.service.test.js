@@ -22,5 +22,5 @@ describe('GET /datatables/WIKI/PRICES', () => {
       );
       done();
     });
-  });
+  }).timeout(5000);
 });
