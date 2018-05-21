@@ -70,7 +70,6 @@ module.exports = {
         } catch (e) {
           console.log(e);
         }
-
         // Passing stock response object to view index.ejs
         res.render('index', stockResponse);
       }
