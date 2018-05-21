@@ -2,10 +2,6 @@ const request = require('request');
 const Helper = require('../helpers/transformData.js');
 const api_key = 's-GMZ_xkw6CrkGYUWs1p';
 const baseUrl = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES';
-const stockResponse = {'MSFT': {'maxProfit': '', 'busyDay': '', 'averageData': []},
-                      'GOOGL': {'maxProfit': '', 'busyDay': '', 'averageData': []},
-                      'COF': {'maxProfit': '', 'busyDay': '', 'averageData': []},
-                    'biggestLoser': ''};
 
 module.exports = {
   /**
@@ -14,7 +10,12 @@ module.exports = {
   * @return {JSON Object} stockResponse: JSON object with MSFT, GOOGL, and COF data
   */
   getContent: function (req, res) {
-    //Build API GET request to Quandl service
+    // JSON oject that will be returned with data to our index.ejs view
+    const stockResponse = {'MSFT': {'maxProfit': '', 'busyDay': '', 'averageData': []},
+                          'GOOGL': {'maxProfit': '', 'busyDay': '', 'averageData': []},
+                          'COF': {'maxProfit': '', 'busyDay': '', 'averageData': []},
+                        'biggestLoser': ''};
+    // Build API GET request to Quandl service
     const url = Helper.buildRequest(api_key, baseUrl, '2017-01-01', '2017-06-30');
     // API request to Quandl Wiki Stock prices
     request(url, function (err, response, body) {

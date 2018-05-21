@@ -12,6 +12,6 @@ app.listen(3000, function () {
   console.log('App listening on port 3000!')
 })
 // Routing for '/'
-app.all('/', function (req, res) {
-  Home.getContent(req, res);
+app.get('/', function (req, res) {
+    Home.getContent(req, res);
 });
