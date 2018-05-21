@@ -24,7 +24,7 @@ module.exports = {
       } else {
         // Parsing JSON body so it is readable for JavaScript
         const quandlBody = JSON.parse(body);
-        // Calculate average open and close data for MSFT, GOOGL, and COF and, set returned objects to overall stock response object
+        // Calculate average open and close data for MSFT, GOOGL, and COF, and set returned objects to overall stock response object
         try {
           for (let i = 1; i <= 6; i++) {
             const msftAverages = Helper.calculateAverages('MSFT', i, quandlBody);
@@ -38,7 +38,7 @@ module.exports = {
         catch(e) {
           console.log(e);
         }
-        // Get max profit data for MSFT, GOOGL, and COF and, set returned objects to overall stock response object
+        // Get max profit data for MSFT, GOOGL, and COF, and set returned objects to overall stock response object
         try {
           const msftMaxProfit = Helper.calculateMaxProfit('MSFT', quandlBody);
           stockResponse.MSFT.maxProfit = msftMaxProfit;
