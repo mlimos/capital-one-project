@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      var microsoftData = <%- JSON.stringify(MSFT) %>;
+      var googleData = <%- JSON.stringify(GOOGL) %>;
+      var cofData = <%- JSON.stringify(COF) %>;
+      var biggestLoserData = <%- JSON.stringify(biggestLoser) %>;
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawAverageOpenChart);
+      google.charts.setOnLoadCallback(drawAverageCloseChart);
+
+     function drawAverageOpenChart() {
+       var openData = [['Month', 'Microsoft', 'Google', 'Capital One']];
+       for (var i = 0; i < microsoftData.averageData.length; i++) {
+         openData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_open, googleData.averageData[i].average_open, cofData.averageData[i].average_open]);
+       }
+
+       var data = google.visualization.arrayToDataTable(
+         openData
+       );
+
+       var options = {
+         title: 'Average Open Data',
+         curveType: 'function',
+         legend: { position: 'bottom' },
+         pointSize: 10
+       };
+
+       var chart = new google.visualization.LineChart(document.getElementById('average_open_chart'));
+
+       chart.draw(data, options);
+     }
+
+     function drawAverageCloseChart() {
+       var openData = [['Month', 'Microsoft', 'Google', 'Capital One']];
+       for (var i = 0; i < microsoftData.averageData.length; i++) {
+         openData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_close, googleData.averageData[i].average_close, cofData.averageData[i].average_close]);
+       }
+
+       var data = google.visualization.arrayToDataTable(
+         openData
+       );
+
+       var options = {
+         title: 'Average Close Data',
+         curveType: 'function',
+         legend: { position: 'bottom' },
+         pointSize: 10
+       };
+
+       var chart = new google.visualization.LineChart(document.getElementById('average_close_chart'));
+
+       chart.draw(data, options);
+     }
+       // Get the modal
+       window.onload = function() {
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn1 = document.getElementById("dailyBtn");
+        var btn2 = document.getElementById("busyDayBtn");
+        var btn3 = document.getElementById("biggestLoserBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn1.onclick = function() {
+            //var data = 'Date: ' + microsoftData.maxProfit.date + ', ' + ;
+            modal.style.display = "block";
+            //document.getElementById("test").prepend(data);
+            document.getElementById("test").innerHTML =
+                '<p><b>Ticker</b>: MSFT, <b>Date</b>: ' + microsoftData.maxProfit.date + ', <b>Max Profit:</b> ' + microsoftData.maxProfit.profit + '</p>' +
+                '<p><b>Ticker</b>: GOOGL, <b>Date</b>: ' + googleData.maxProfit.date + ', <b>Max Profit:</b> ' + googleData.maxProfit.profit + '</p>' +
+                '<p><b>Ticker</b>: COF, <b>Date</b>: ' + cofData.maxProfit.date + ', <b>Max Profit:</b> ' + cofData.maxProfit.profit + '</p>';
+        }
+
+        btn2.onclick = function() {
+          modal.style.display = "block";
+            document.getElementById("test").innerHTML = '';
+          //document.getElementById("test").prepend(data);
+          var modalContent = document.getElementById("test");
+          modalContent.innterHTML = '<p><b>Ticker</b>: MSFT</p>';
+
+          for (var i = 0; i < microsoftData.busyDay.allBusyDays.length; i++) {
+            var element = document.createElement("p");
+            element.id = "line" + i;
+            modalContent.appendChild(element);
+            var lineContent = document.getElementById('line' + i);
+            lineContent.innerHTML = '<p><b>Ticker:</b> MSFT, <b>Date:</b>' + microsoftData.busyDay.allBusyDays[i].day + ', <b>Volume:</b>' + microsoftData.busyDay.allBusyDays[i].volume +
+              '<b>Ticker:</b> GOOGL, <b>Date:</b>' + googleData.busyDay.allBusyDays[i].day + ', <b>Volume:</b>' + googleData.busyDay.allBusyDays[i].volume +
+              '<b>Ticker:</b> COF, <b>Date:</b>' + cofData.busyDay.allBusyDays[i].day + ', <b>Volume:</b>' + cofData.busyDay.allBusyDays[i].volume + '</p>';
+          }
+        }
+
+        btn3.onclick = function() {
+          modal.style.display = "block";
+          document.getElementById("test").innerHTML =
+              '<p><b>Ticker:</b> ' +  biggestLoserData.ticker + ', <b>Number of Days:</b> ' + biggestLoserData.numDays + '</p>';
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    </script>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+    <div class="container">
+        <div id="average_open_chart"></div>
+        <div id="average_close_chart"></div>
+    </div>
+    <div id="testGroup" class="btn-group">
+      <button id="dailyBtn" class="btn-style">Max Daily Profit</button>
+      <button id="busyDayBtn" class="btn-style">Busy Day</button>
+      <button id="biggestLoserBtn" class="btn-style">Biggest Loser</button>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content" id ="test">
+        <span class="close">&times;</span>
+      </div>
+    </div>
+  </body>
+</html>

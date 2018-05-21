@@ -1,0 +1,24 @@
+{
+  "name": "capital-one-coding-exercise",
+  "version": "1.0.0",
+  "description": "Coding Exercise for Capital One",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.js",
+    "start": "node app.js"
+  },
+  "author": "Megan Limos",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mocha": "^5.1.1",
+    "request": "^2.85.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "sinon": "^5.0.7"
+  }
+}
