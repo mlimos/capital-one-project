@@ -1,7 +1,11 @@
 const Home = require('../../controllers/Home');
 const Helper = require('../../helpers/transformData.js');
 const quandlData = require('../fixtures/quandlData.json');
-/* Test */
+const chai = require('chai');
+const expect = chai.expect;
+/**
+* Unit tests for testing ./helpers/transformData.js
+*/
 describe('Calculate MSFT Average Open and Close', () => {
   it('Calculates MSFT average open and close data for the month of April', (done) => {
     const obj = quandlData.all.success.body;
@@ -29,6 +33,17 @@ describe('Calculate COF Average Open and Close', () => {
     done();
   });
 });
+describe('Error throws for Average Open and Close', () => {
+  it('Given an invalid month or ticker, throws an error', (done) => {
+    const obj = quandlData.all.success.body;
+    try {
+      let responseObj = Helper.calculateAverages('COF', 7, obj);
+    } catch (e) {
+      expect(e).to.equal('Not able to compute averages for: COF in month 7');
+    }
+    done();
+  });
+});
 describe('Calculate Max Profit for MSFT', () => {
   it('Calculates the day where MSFT had the maximum profit', (done) => {
     const obj = quandlData.all.success.body;
@@ -53,6 +68,17 @@ describe('Calculate Max Profit for COF', () => {
     var responseObj = Helper.calculateMaxProfit('COF', obj);
     responseObj.date.should.equal("2017-04-03");
     responseObj.profit.should.equal(2.24);
+    done();
+  });
+});
+describe('Error throw when calculating max profit', () => {
+  it('Given an invalid ticker, throws an error', (done) => {
+    const obj = quandlData.all.success.body;
+    try {
+      let responseObj = Helper.calculateMaxProfit('FB', obj);
+    } catch (e) {
+      expect(e).to.equal('Not able to get data for ticker FB');
+    }
     done();
   });
 });
@@ -92,6 +118,17 @@ describe('Calculate Busy Days for COF', () => {
     responseObj.allBusyDays[0].volume.should.equal(3158771);
     responseObj.allBusyDays[1].day.should.equal("2017-05-04");
     responseObj.allBusyDays[1].volume.should.equal(3154418);
+    done();
+  });
+});
+describe('Error thrown when calculating busy days', () => {
+  it('Given an invalid ticker, throws an error', (done) => {
+    const obj = quandlData.all.success.body;
+    try {
+      let responseObj = Helper.calculateBusyDays('FB', obj);
+    } catch (e) {
+      expect(e).to.equal('Not able to get data for ticker FB');
+    }
     done();
   });
 });
