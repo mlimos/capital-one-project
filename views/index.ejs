@@ -87,8 +87,7 @@
        btn2.onclick = function() {
          modal.style.display = "block";
          document.getElementById("myModalContent").innerHTML = '';
-         let modalContent = document.getElementById("myModalContent");
-         modalContent.innerHTML =
+         document.getElementById("myModalContent").modalContent.innerHTML =
            '<p><b>MSFT:</b> ' + JSON.stringify(microsoftData.busyDay) + '</p>' +
            '<p><b>GOOGL:</b>' + JSON.stringify(googleData.busyDay) + '</p>' +
            '<p><b>COF: </b>' + JSON.stringify(cofData.busyDay) +'</p>';
