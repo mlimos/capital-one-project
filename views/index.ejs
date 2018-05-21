@@ -19,27 +19,29 @@
         let openData = [['Month', 'Microsoft', 'Google', 'Capital One']];
         let numberOfMonths = microsoftData.averageData.length;
         // Pushing line data to the openData array that will be rendered by Google Charts
-        for (let i = 0; i < numberOfMonths; i++) {
-          openData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_open, googleData.averageData[i].average_open, cofData.averageData[i].average_open]);
-        }
-        // Google Charts function to convert array to a data table for their processing
-        let data = google.visualization.arrayToDataTable(
-          openData
-        );
-        // Setting chart properties
-        const options = {
-          title: 'Average Open Data',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-          pointSize: 10,
-          vAxis: {
-            title: 'Price ($)'
+        if (numberOfMonths > 0) {
+          for (let i = 0; i < numberOfMonths; i++) {
+            openData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_open, googleData.averageData[i].average_open, cofData.averageData[i].average_open]);
           }
-        };
-        // Creating a line chart in the appropriate div
-        let chart = new google.visualization.LineChart(document.getElementById('average_open_chart'));
-        // Drawing the chart onto the page
-        chart.draw(data, options);
+          // Google Charts function to convert array to a data table for their processing
+          let data = google.visualization.arrayToDataTable(
+            openData
+          );
+          // Setting chart properties
+          const options = {
+            title: 'Average Open Data',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            pointSize: 10,
+            vAxis: {
+              title: 'Price ($)'
+            }
+          };
+          // Creating a line chart in the appropriate div
+          let chart = new google.visualization.LineChart(document.getElementById('average_open_chart'));
+          // Drawing the chart onto the page
+          chart.draw(data, options);
+        }
      }
 
      // Draws average close chart using google charts library. Plots MSFT, GOOGL, and COF average close data against each other
@@ -47,27 +49,29 @@
        let closeData = [['Month', 'Microsoft', 'Google', 'Capital One']];
        let numberOfMonths = microsoftData.averageData.length;
        // Pushing line data to the closeData array that will be rendered by Google Charts
-       for (let i = 0; i < numberOfMonths; i++) {
-         closeData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_close, googleData.averageData[i].average_close, cofData.averageData[i].average_close]);
-       }
-       // Google Charts function to convert array to a data table for their processing
-       let data = google.visualization.arrayToDataTable(
-         closeData
-       );
-       // Setting chart properties
-       const options = {
-         title: 'Average Close Data',
-         curveType: 'function',
-         legend: { position: 'bottom' },
-         pointSize: 10,
-         vAxis: {
-           title: 'Price ($)'
+       if (numberOfMonths > 0) {
+         for (let i = 0; i < numberOfMonths; i++) {
+           closeData.push([microsoftData.averageData[i].month, microsoftData.averageData[i].average_close, googleData.averageData[i].average_close, cofData.averageData[i].average_close]);
          }
-       };
-       // Creating a line chart in the appropriate div
-       let chart = new google.visualization.LineChart(document.getElementById('average_close_chart'));
-       // Drawing the chart onto the page
-       chart.draw(data, options);
+         // Google Charts function to convert array to a data table for their processing
+         let data = google.visualization.arrayToDataTable(
+           closeData
+         );
+         // Setting chart properties
+         const options = {
+           title: 'Average Close Data',
+           curveType: 'function',
+           legend: { position: 'bottom' },
+           pointSize: 10,
+           vAxis: {
+             title: 'Price ($)'
+           }
+         };
+         // Creating a line chart in the appropriate div
+         let chart = new google.visualization.LineChart(document.getElementById('average_close_chart'));
+         // Drawing the chart onto the page
+         chart.draw(data, options);
+       }
      }
        // Events to control button clicks at the bottom of the page
      window.onload = function() {

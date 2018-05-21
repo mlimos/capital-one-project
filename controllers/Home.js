@@ -24,49 +24,45 @@ module.exports = {
       } else {
         // Parsing JSON body so it is readable for JavaScript
         const quandlBody = JSON.parse(body);
-        // Calculates average open and close data for MSFT, GOOGL, and COF
+        // Calculate average open and close data for MSFT, GOOGL, and COF and, set returned objects to overall stock response object
         try {
           for (let i = 1; i <= 6; i++) {
             const msftAverages = Helper.calculateAverages('MSFT', i, quandlBody);
-            const googlAverages = Helper.calculateAverages('GOOGL', i, quandlBody);
-            const cofAverages = Helper.calculateAverages('COF', i, quandlBody);
-            // Setting returned objects to overall stock response object
             stockResponse.MSFT.averageData.push(msftAverages);
+            const googlAverages = Helper.calculateAverages('GOOGL', i, quandlBody);
             stockResponse.GOOGL.averageData.push(googlAverages);
+            const cofAverages = Helper.calculateAverages('COF', i, quandlBody);
             stockResponse.COF.averageData.push(cofAverages);
           }
         }
         catch(e) {
           console.log(e);
         }
-        // Get max profit data for MSFT, GOOGL, and COF
+        // Get max profit data for MSFT, GOOGL, and COF and, set returned objects to overall stock response object
         try {
           const msftMaxProfit = Helper.calculateMaxProfit('MSFT', quandlBody);
-          const googlMaxProfit = Helper.calculateMaxProfit('GOOGL', quandlBody);
-          const cofMaxProfit = Helper.calculateMaxProfit('COF', quandlBody);
-          // Setting returned objects to overall stock response object
           stockResponse.MSFT.maxProfit = msftMaxProfit;
+          const googlMaxProfit = Helper.calculateMaxProfit('GOOGL', quandlBody);
           stockResponse.GOOGL.maxProfit = googlMaxProfit;
+          const cofMaxProfit = Helper.calculateMaxProfit('COF', quandlBody);
           stockResponse.COF.maxProfit = cofMaxProfit;
         } catch (e) {
           console.log(e);
         }
-        // Get average volume and busy days for MSFT, GOOGL, and COF
+        // Get average volume and busy days for MSFT, GOOGL, and COF, and set returned objects to overall stock response object
         try {
           const msftBusyDays = Helper.calculateBusyDays('MSFT', quandlBody);
-          const googlBusyDays = Helper.calculateBusyDays('GOOGL', quandlBody);
-          const cofBusyDays = Helper.calculateBusyDays('COF', quandlBody);
-          // Setting returned objects to overall stock response object
           stockResponse.MSFT.busyDay = msftBusyDays;
+          const googlBusyDays = Helper.calculateBusyDays('GOOGL', quandlBody);
           stockResponse.GOOGL.busyDay = googlBusyDays;
+          const cofBusyDays = Helper.calculateBusyDays('COF', quandlBody);
           stockResponse.COF.busyDay = cofBusyDays;
         } catch (e) {
           console.log(e);
         }
-        // Find the biggest loser of MSFT, GOOGL, and COF
+        // Find the biggest loser of MSFT, GOOGL, and COF, and set returned object to overall stock response object
         try {
           const biggestLoserResponseObj = Helper.calculateBiggestLoser(quandlBody);
-          // Setting returned objects to overall stock response object
           stockResponse.biggestLoser = biggestLoserResponseObj;
         } catch (e) {
           console.log(e);
